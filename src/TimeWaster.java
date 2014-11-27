@@ -19,51 +19,83 @@ public class TimeWaster
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
+    private static int found = 0;
+
+    private static boolean done = false;
+
+    public static void main(String[] args) throws InterruptedException
     {
-        String s = "typewriter";
-        int runningTotal = 0;
-        
-        char input[] = s.toCharArray();
-        char desired[] = "eeiprrttwy".toCharArray();
-        
-        for (int j = 0; j < 300; j++)
+
+        final long startTime = System.currentTimeMillis();
+
+        Runnable r = new Runnable()
         {
-            final long startTime = System.currentTimeMillis();
 
-            for (int i = 0; i < Integer.MAX_VALUE; i++)
+            @Override
+            public void run()
             {
-                shuffle(input);
 
-                if (Arrays.equals(desired, input))
-                {
-                    runningTotal += System.currentTimeMillis() - startTime;
-                    break;
-                }
+                String s = "typewriter";
 
-                if (i == Integer.MAX_VALUE)
+                char desired[] = "eeiprrttwy".toCharArray();
+
+                char[] input = s.toCharArray();
+                Random rnd = new Random();
+
+                for (int i = 0; i < Integer.MAX_VALUE; i++)
                 {
-                    i = 0;
+                    shuffle(input, rnd);
+
+                    if (Arrays.equals(desired, input))
+                    {
+                        found++;
+
+                        if (found >= 300)
+                        {
+                            if (!done)
+                            {
+                                long timeSpent = System.currentTimeMillis() - startTime;
+                                System.out.println("Spent " + timeSpent + "ms for " + found + " tries. Average is: " + timeSpent / found + "ms");
+                                done = true;
+                            }
+                            break;
+                        }
+                    }
+
+                    if (i == Integer.MAX_VALUE)
+                    {
+                        i = 0;
+                    }
                 }
             }
+        };
+
+        Thread threads[] = new Thread[8];
+
+        for (int i = 0; i < 8; i++)
+        {
+            threads[i] = new Thread(r);
+            threads[i].start();
         }
-        
-        System.out.println("Spent " + runningTotal + "ms for 300 tries. Average is: " + runningTotal / 300 + "ms");
+
+        while (!done)
+        {
+            Thread.sleep(1);
+
+        }
     }
-    
-    private static Random rnd = new Random();
-    
-    public static void shuffle(char[] ar)
+
+    public static void shuffle(char[] ar, Random random)
     {
-    for (int i = ar.length - 1; i > 0; i--)
-    {
-      int index = rnd.nextInt(i + 1);
-      // Simple swap
-      char a = ar[index];
-      ar[index] = ar[i];
-      ar[i] = a;
-    }
-  
+        for (int i = ar.length - 1; i > 0; i--)
+        {
+            int index = random.nextInt(i + 1);
+            // Simple swap
+            char a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
+
     }
 
     public static String shuffle(String input)
