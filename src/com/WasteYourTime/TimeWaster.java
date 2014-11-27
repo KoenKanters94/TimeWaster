@@ -21,27 +21,30 @@ public class TimeWaster {
     public static void main(String[] args) {
         String s = "typewriter";
         final long startTime = System.currentTimeMillis();
+        long attempts = 0;
         
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             s = shuffle(s);
             
             if (s.equals("eeiprrttwy")) {
                 System.out.println(s);
-                printWastedTime(startTime);
+                printWastedTime(startTime, attempts);
                 break;
             }
             
             if (i == Integer.MAX_VALUE) {
                  i = 0;
-                 printWastedTime(startTime);
+                 printWastedTime(startTime, attempts);
                  System.out.println("Max integer reached!");
-            }            
+            }          
+            
+            attempts++;
         }
     }
     
-    public static void printWastedTime(long beginTime) {
+    public static void printWastedTime(long beginTime, long attempts) {
         long wastedTime = System.currentTimeMillis() - beginTime;
-        System.out.println("You wasted: " + wastedTime + "milliseconds");
+        System.out.println("You wasted: " + wastedTime + " milliseconds (Attempts: " + attempts + ")");
     }
   
     
