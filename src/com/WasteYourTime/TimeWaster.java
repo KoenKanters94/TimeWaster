@@ -20,6 +20,8 @@ public class TimeWaster {
      */
     public static void main(String[] args) {
         String s = "typewriter";
+        double possibilities = Math.pow(s.length(), 26);
+        System.out.printf("There are %f possibilities\n", possibilities);
         final long startTime = System.currentTimeMillis();
         long attempts = 0;
         
