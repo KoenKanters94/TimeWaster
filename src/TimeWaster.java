@@ -5,7 +5,9 @@
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -22,15 +24,18 @@ public class TimeWaster
         String s = "typewriter";
         int runningTotal = 0;
         
+        char input[] = s.toCharArray();
+        char desired[] = "eeiprrttwy".toCharArray();
+        
         for (int j = 0; j < 300; j++)
         {
             final long startTime = System.currentTimeMillis();
 
             for (int i = 0; i < Integer.MAX_VALUE; i++)
             {
-                s = shuffle(s);
+                shuffle(input);
 
-                if (s.equals("eeiprrttwy"))
+                if (Arrays.equals(desired, input))
                 {
                     runningTotal += System.currentTimeMillis() - startTime;
                     break;
@@ -44,6 +49,21 @@ public class TimeWaster
         }
         
         System.out.println("Spent " + runningTotal + "ms for 300 tries. Average is: " + runningTotal / 300 + "ms");
+    }
+    
+    private static Random rnd = new Random();
+    
+    public static void shuffle(char[] ar)
+    {
+    for (int i = ar.length - 1; i > 0; i--)
+    {
+      int index = rnd.nextInt(i + 1);
+      // Simple swap
+      char a = ar[index];
+      ar[index] = ar[i];
+      ar[i] = a;
+    }
+  
     }
 
     public static String shuffle(String input)
