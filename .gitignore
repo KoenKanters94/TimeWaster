@@ -6,7 +6,7 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
-*.class
+#*.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
