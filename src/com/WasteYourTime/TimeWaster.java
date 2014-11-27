@@ -20,7 +20,7 @@ public class TimeWaster {
      */
     public static void main(String[] args) {
         String s = "typewriter";
-        final long startTime = System.currentTimeMillis() % 1000;
+        final long startTime = System.currentTimeMillis();
         
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             s = shuffle(s);
@@ -40,7 +40,7 @@ public class TimeWaster {
     }
     
     public static void printWastedTime(long beginTime) {
-        long wastedTime = System.currentTimeMillis() % 1000 - beginTime;
+        long wastedTime = System.currentTimeMillis() - beginTime;
         System.out.println("You wasted: " + wastedTime + "milliseconds");
     }
   
